@@ -1,7 +1,7 @@
 # The Fishing Pong
 
 ## Repository
-<Link to your project's public GitHub respository>
+https://github.com/natzambrano/finalproject
 
 ## Description
 For this project, I will be recreating the classic arcade game Pong - but with a twist! 
