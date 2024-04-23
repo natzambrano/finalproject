@@ -13,12 +13,19 @@ def ball_velocity(ball_pos, ball_speed, ball_size, resolution):
     ball_pos[0] += ball_speed[0]
     ball_pos[1] += ball_speed[1]
 
-    if ball_pos[0] <= 0 or ball_pos[0] >= resolution[0] - ball_size:
-        ball_speed[0] = -ball_speed[0]
-
     if ball_pos[1] <= 0 or ball_pos[1] >= resolution[1] - ball_size:
         ball_speed[1] = -ball_speed[1]
     
+    return ball_pos, ball_speed
+
+def reset_ball(ball_pos, ball_speed, resolution):
+    # Resets the ball if going past resolution
+    if ball_pos[0] < 0 or ball_pos[0] > resolution[0]:
+        ball_pos = [resolution[0] // 2, resolution[1] // 2]
+        if ball_speed[0] > 0:
+            ball_speed = [5, 5] 
+        else:
+            [5, 5]
     return ball_pos, ball_speed
 
 def main():
@@ -37,7 +44,6 @@ def main():
     ball_speed = [5, 5]
 
     while True:
-        keys_pressed = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -45,6 +51,9 @@ def main():
 
         # Calculate ball position
         ball_pos, ball_speed = ball_velocity(ball_pos, ball_speed, ball_size, resolution)
+
+        # Reset the ball's position
+        ball_pos, ball_speed = reset_ball(ball_pos, ball_speed, resolution)
 
         # Draw all game elements
         screen.fill(black)
