@@ -42,21 +42,48 @@ def main():
     ball_size = 30
     ball_pos = [resolution[0] // 2, resolution[1] // 2]
     ball_speed = [5, 5]
+    paddle_dimension = (20, 200)
+    paddle_speed = 10
+    paddle1_pos = [10, resolution[1] // 2 - paddle_dimension[1] // 2]
+    paddle2_pos = [resolution[0] - 10 - paddle_dimension[0], resolution[1] // 2 - paddle_dimension[1] // 2]
 
     while True:
+        keys_pressed = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if keys_pressed[pygame.K_w] and paddle1_pos[1] > 0:
+                paddle1_pos[1] -= paddle_speed
+            if keys_pressed[pygame.K_s] and paddle1_pos[1] < resolution[1] - paddle_dimension[1]:
+                paddle1_pos[1] += paddle_speed
+            if keys_pressed[pygame.K_UP] and paddle2_pos[1] > 0:
+                paddle2_pos[1] -= paddle_speed
+            if keys_pressed[pygame.K_DOWN] and paddle2_pos[1] < resolution[1] - paddle_dimension[1]:
+                paddle2_pos[1] += paddle_speed
 
         # Calculate ball position
         ball_pos, ball_speed = ball_velocity(ball_pos, ball_speed, ball_size, resolution)
 
+        # Paddle collision logic
+        paddle1_collision = (
+            ball_pos[0] <= paddle1_pos[0] + paddle_dimension[0] and
+            paddle1_pos[1] <= ball_pos[1] <= paddle1_pos[1] + paddle_dimension[1])
+        
+        paddle2_collision = (
+            ball_pos[0] + ball_size >= paddle2_pos[0] and
+            paddle2_pos[1] <= ball_pos[1] <= paddle2_pos[1] + paddle_dimension[1])
+        
+        if paddle1_collision or paddle2_collision:
+            ball_speed[0] = -ball_speed[0]
+        
         # Reset the ball's position
         ball_pos, ball_speed = reset_ball(ball_pos, ball_speed, resolution)
 
         # Draw all game elements
         screen.fill(black)
+        pygame.draw.rect(screen, white, pygame.Rect(paddle1_pos[0], paddle1_pos[1], paddle_dimension[0], paddle_dimension[1]))
+        pygame.draw.rect(screen, white, pygame.Rect(paddle2_pos[0], paddle2_pos[1], paddle_dimension[0], paddle_dimension[1]))
         pygame.draw.ellipse(screen, white, pygame.Rect(ball_pos[0], ball_pos[1], ball_size, ball_size))
         pygame.display.flip()
 
