@@ -7,7 +7,7 @@ def init_screen(resolution):
     screen = pygame.display.set_mode((resolution[0], resolution[1]))
     pygame.display.set_caption('The Fishing-Pong')
     return screen
-
+    
 def ball_velocity(ball_pos, ball_speed, ball_size, resolution):
     # Calculates the ball's position and direction
     ball_pos[0] += ball_speed[0]
@@ -18,14 +18,23 @@ def ball_velocity(ball_pos, ball_speed, ball_size, resolution):
     
     return ball_pos, ball_speed
 
+def paddle(paddle1_pos, paddle2_pos, paddle_height, paddle_speed, resolution, keys_pressed):
+    # Calculates the paddle movements
+    if keys_pressed[pygame.K_w] and paddle1_pos[1] > 0:
+        paddle1_pos[1] -= paddle_speed
+    if keys_pressed[pygame.K_s] and paddle1_pos[1] < resolution[1] - paddle_height:
+        paddle1_pos[1] += paddle_speed
+    if keys_pressed[pygame.K_UP] and paddle2_pos[1] > 0:
+        paddle2_pos[1] -= paddle_speed
+    if keys_pressed[pygame.K_DOWN] and paddle2_pos[1] < resolution[1] - paddle_height:
+        paddle2_pos[1] += paddle_speed
+    return paddle1_pos, paddle2_pos
+
 def reset_ball(ball_pos, ball_speed, resolution):
     # Resets the ball if going past resolution
     if ball_pos[0] < 0 or ball_pos[0] > resolution[0]:
         ball_pos = [resolution[0] // 2, resolution[1] // 2]
-        if ball_speed[0] > 0:
-            ball_speed = [5, 5] 
-        else:
-            [5, 5]
+        ball_speed = [5, 5] if ball_speed[0] > 0 else [-5, 5]
     return ball_pos, ball_speed
 
 def main():
@@ -35,8 +44,8 @@ def main():
     clock = pygame.time.Clock()
 
     # Colors
-    black = (0, 0, 0)
     white = (255, 255, 255)
+    black = (0, 0, 0)
 
     # Initial gameplay values
     ball_size = 30
@@ -53,15 +62,10 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if keys_pressed[pygame.K_w] and paddle1_pos[1] > 0:
-                paddle1_pos[1] -= paddle_speed
-            if keys_pressed[pygame.K_s] and paddle1_pos[1] < resolution[1] - paddle_dimension[1]:
-                paddle1_pos[1] += paddle_speed
-            if keys_pressed[pygame.K_UP] and paddle2_pos[1] > 0:
-                paddle2_pos[1] -= paddle_speed
-            if keys_pressed[pygame.K_DOWN] and paddle2_pos[1] < resolution[1] - paddle_dimension[1]:
-                paddle2_pos[1] += paddle_speed
 
+        # Move the paddles
+        paddle1_pos, paddle2_pos = paddle(paddle1_pos, paddle2_pos, paddle_dimension[1], paddle_speed, resolution, keys_pressed)
+        
         # Calculate ball position
         ball_pos, ball_speed = ball_velocity(ball_pos, ball_speed, ball_size, resolution)
 
