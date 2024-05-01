@@ -42,10 +42,12 @@ def main():
     resolution = (800, 600)
     screen = init_screen(resolution)
     clock = pygame.time.Clock()
-
-    # Colors
-    white = (255, 255, 255)
-    black = (0, 0, 0)
+    
+    # Images
+    background = pygame.transform.scale(pygame.image.load("assets/background.jpg").convert(), resolution)
+    salmon = pygame.transform.scale(pygame.image.load("assets/salmon.png").convert_alpha(), (80, 200))
+    trout = pygame.transform.scale(pygame.image.load("assets/trout.png").convert_alpha(), (80, 200))
+    bobber = pygame.transform.scale(pygame.image.load("assets/bobber.png").convert_alpha(), (30, 30))
 
     # Initial gameplay values
     ball_size = 30
@@ -84,13 +86,12 @@ def main():
         # Reset the ball's position
         ball_pos, ball_speed = reset_ball(ball_pos, ball_speed, resolution)
 
-        # Draw all game elements
-        screen.fill(black)
-        pygame.draw.rect(screen, white, pygame.Rect(paddle1_pos[0], paddle1_pos[1], paddle_dimension[0], paddle_dimension[1]))
-        pygame.draw.rect(screen, white, pygame.Rect(paddle2_pos[0], paddle2_pos[1], paddle_dimension[0], paddle_dimension[1]))
-        pygame.draw.ellipse(screen, white, pygame.Rect(ball_pos[0], ball_pos[1], ball_size, ball_size))
+        screen.blit(background, (0, 0))
+        screen.blit(salmon, (paddle1_pos[0] - 20, paddle1_pos[1])) #minus 20 to center properly
+        screen.blit(trout, (paddle2_pos[0] - 40, paddle2_pos[1])) #minus 40 to center properly
+        screen.blit(bobber, (ball_pos[0], ball_pos[1]))
+        
         pygame.display.flip()
-
         clock.tick(60) 
 
 if __name__ == "__main__":
