@@ -28,8 +28,8 @@ The Fishing-Pong is a simple 2D arcade game built using the Pygame library in Py
 
 ## Images📸
 
-![alt text](assets/screenshot1.png)
-![alt text](assets/screenshot2.png)
+![alt text](src/assets/screenshot1.png)
+![alt text](src/assets/screenshot2.png)
 
 ## Dependencies📚
 
