@@ -1,3 +1,4 @@
+import time
 import pygame
 import sys
 
@@ -42,6 +43,7 @@ def main():
     resolution = (800, 600)
     screen = init_screen(resolution)
     clock = pygame.time.Clock()
+    game_on = True
     
     # Images
     background = pygame.transform.scale(pygame.image.load("assets/background.jpg").convert(), resolution)
@@ -58,12 +60,26 @@ def main():
     paddle1_pos = [10, resolution[1] // 2 - paddle_dimension[1] // 2]
     paddle2_pos = [resolution[0] - 10 - paddle_dimension[0], resolution[1] // 2 - paddle_dimension[1] // 2]
 
+    # Scores
+    score1 = 0
+    score2 = 0
+
+    # Fonts
+    font = pygame.font.Font(None, 36)
+    winfont = pygame.font.Font(None, 90)
+
     while True:
         keys_pressed = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+        # Ends the game
+        if score1 >= 3 or score2 >= 3:
+            time.sleep(3)
+            pygame.quit()
+            sys.exit()
 
         # Move the paddles
         paddle1_pos, paddle2_pos = paddle(paddle1_pos, paddle2_pos, paddle_dimension[1], paddle_speed, resolution, keys_pressed)
@@ -83,16 +99,36 @@ def main():
         if paddle1_collision or paddle2_collision:
             ball_speed[0] = -ball_speed[0]
         
-        # Reset the ball's position
-        ball_pos, ball_speed = reset_ball(ball_pos, ball_speed, resolution)
-
+        # Check if the ball went past the paddle to update scores
+        if ball_pos[0] < 0 and game_on:
+            score2 += 1
+            ball_pos, ball_speed = reset_ball(ball_pos, ball_speed, resolution)        
+        elif ball_pos[0] > resolution[0] and game_on:
+            score1 += 1
+            ball_pos, ball_speed = reset_ball(ball_pos, ball_speed, resolution)
+            
         screen.blit(background, (0, 0))
         screen.blit(salmon, (paddle1_pos[0] - 20, paddle1_pos[1])) #minus 20 to center properly
         screen.blit(trout, (paddle2_pos[0] - 40, paddle2_pos[1])) #minus 40 to center properly
         screen.blit(bobber, (ball_pos[0], ball_pos[1]))
+
+        # Check if any player has reached three points
+        if score1 >= 3 or score2 >= 3:
+            if score1 >= 3:
+                winner = "Player 1"
+            else: 
+                winner = "Player 2"
+
+            win_text = winfont.render(f"{winner} wins!", True, (0, 0, 0))
+            screen.blit(win_text, (resolution[0] // 4, resolution[1] // 2.5))
+            game_on = False
+
+        # Show score
+        score_text = font.render(f"P1: {score1} | P2: {score2}", True, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
         
         pygame.display.flip()
-        clock.tick(60) 
+        clock.tick(60)
 
 if __name__ == "__main__":
     main()
