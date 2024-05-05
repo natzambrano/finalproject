@@ -41,3 +41,7 @@ The Fishing-Pong is a simple 2D arcade game built using the Pygame library in Py
 - ▶️ Make Pong With Python!  ---------------  https://www.youtube.com/watch?v=vVGTZlnnX3U
 - ▶️ Pygame Loading Images  ----------------  https://www.youtube.com/watch?v=rHEnZfq_zEQ
 - 😴 Using time.sleep()  -------------------  https://www.digitalocean.com/community/tutorials/python-time-sleep
+
+## Important Links🔗
+- Github: https://github.com/natzambrano/finalproject
+- Youtube: 
