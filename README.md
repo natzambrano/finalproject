@@ -24,12 +24,12 @@ The Fishing-Pong is a simple 2D arcade game built using the Pygame library in Py
 1. Clone the repository or download the files.
 2. Make sure you have Python installed on your system.
 3. Install the Pygame library using pip: `pip install pygame`.
-4. Run the `main.py` file using Python: `python main.py`.
+4. Run the `the_fishing_pong.py` file in the `src` directory using Python: `python the_fishing_pong.py`.
 
 ## Images📸
 
-![alt text](assets/screenshot1.png)
-![alt text](assets/screenshot2.png)
+![alt text](src/assets/screenshot1.png)
+![alt text](src/assets/screenshot2.png)
 
 ## Dependencies📚
 
@@ -41,3 +41,7 @@ The Fishing-Pong is a simple 2D arcade game built using the Pygame library in Py
 - ▶️ Make Pong With Python!  ---------------  https://www.youtube.com/watch?v=vVGTZlnnX3U
 - ▶️ Pygame Loading Images  ----------------  https://www.youtube.com/watch?v=rHEnZfq_zEQ
 - 😴 Using time.sleep()  -------------------  https://www.digitalocean.com/community/tutorials/python-time-sleep
+
+## Important Links🔗
+- Github: https://github.com/natzambrano/finalproject
+- Youtube: 
