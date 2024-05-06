@@ -76,8 +76,8 @@ def main():
                 sys.exit()
 
         # Ends the game
-        if score1 >= 3 or score2 >= 3:
-            time.sleep(3)
+        if score1 >= 10 or score2 >= 10:
+            time.sleep(5)
             pygame.quit()
             sys.exit()
 
@@ -113,8 +113,8 @@ def main():
         screen.blit(bobber, (ball_pos[0], ball_pos[1]))
 
         # Check if any player has reached three points
-        if score1 >= 3 or score2 >= 3:
-            if score1 >= 3:
+        if score1 >= 10 or score2 >= 10:
+            if score1 >= 10:
                 winner = "Player 1"
             else: 
                 winner = "Player 2"
